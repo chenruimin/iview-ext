@@ -56,11 +56,32 @@ function showInfo (target, content, placement) {
     });
 }
 
-function showConfirm (target, title, okCallback, cancelCallback, okText, cancelText) {
+function showCard (target, title, content, placement) {
+    title = `<div slot="title">${title}</div>`;
+    content = `<div slot="content">${content}</div>`;
+
     return _show(target, () => {
         const div = document.createElement('div');
         div.setAttribute('style', popDivStyle);
-        div.innerHTML = `<Poptip-Global confirm :title="title" @on-ok="okCallback" @on-cancel="cancelCallback" :ok-text="okText" :cancel-text="cancelText" :target="target" placement="top"></Poptip-Global>`;
+        div.innerHTML = `<Poptip-Global :placement="placement" :target="target">${title}${content}</Poptip-Global>`;
+        target.appendChild(div);
+
+        return new Vue({
+            el: div,
+            data: {
+                placement,
+                target,
+            },
+            components: {PoptipGlobal}
+        }).$children[0];
+    });
+}
+
+function showConfirm (target, title, placement, okCallback, cancelCallback, okText, cancelText) {
+    return _show(target, () => {
+        const div = document.createElement('div');
+        div.setAttribute('style', popDivStyle);
+        div.innerHTML = `<Poptip-Global confirm :title="title" :placement="placement" @on-ok="okCallback" @on-cancel="cancelCallback" :ok-text="okText" :cancel-text="cancelText" :target="target" placement="top"></Poptip-Global>`;
         target.appendChild(div);
 
         return new Vue({
@@ -68,6 +89,7 @@ function showConfirm (target, title, okCallback, cancelCallback, okText, cancelT
             data: {
                 target,
                 title,
+                placement,
                 okCallback,
                 cancelCallback,
                 okText,
@@ -100,8 +122,11 @@ export default {
     info (target, content, placement) {
         return showInfo(target, content, placement);
     },
-    confirm (target, title, okCallback, cancelCallback, okText, cancelText) {
-        return showConfirm(target, title, okCallback, cancelCallback, okText, cancelText);
+    card (target, title, content, placement) {
+        return showCard(target, title, content, placement);
+    },
+    confirm (target, title, placement, okCallback, cancelCallback, okText, cancelText) {
+        return showConfirm(target, title, placement, okCallback, cancelCallback, okText, cancelText);
     },
     modal (target, content, placement) {
         return showModal(target, content, placement);

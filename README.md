@@ -26,13 +26,18 @@ tooltip.hide();
 ### Poptip
 
 ```
-// show
 // show info
 let poptip = this.$Poptip.info(target, 'I am content', 'right');
+
+// show card
+let poptip = this.$Poptip.card(target, 'I am title', 'I am content', 'right');
+
 // show confirm
-let poptip = this.$Poptip.confirm(target, 'Are you ok?', ()=> {/* ok */}, ()=> {/* cancel */});
+let poptip = this.$Poptip.confirm(target, 'Are you ok?', 'top', ()=> {/* ok */}, ()=> {/* cancel */});
+
 // show confirm with custom button
-let poptip = this.$Poptip.confirm(target, 'Are you ok?', ()=> {/* ok */}, ()=> {/* cancel */}, 'ok', 'cancel');
+let poptip = this.$Poptip.confirm(target, 'Are you ok?', 'top', ()=> {/* ok */}, ()=> {/* cancel */}, 'ok', 'cancel');
+
 // show modal
 let poptip = this.$Poptip.modal(target, '<div>html</div>', 'top');
 

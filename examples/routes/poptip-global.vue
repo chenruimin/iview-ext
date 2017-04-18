@@ -44,6 +44,7 @@
             <Input v-model="value" icon="clipboard" placeholder="请输入..." @on-click="copyValueToClipboard" style="width: 200px"></Input>
         </div>
         <div style="margin-left:100px; margin-bottom: 50px;">
+            <Button @click="showCard" v-clickoutside="hideCard">Card</Button>
             <Button @click="showConfirm" v-clickoutside="hideConfirm">Confirm</Button>
             <Button @click="showConfirm2" v-clickoutside="hideConfirm2">Confirm i18n</Button>
             <Button @click="toggleModal">Modal</Button>
@@ -97,11 +98,26 @@
                     emitter : emitter,
                 });
             },
+            showCard(event) {
+                if (!this.poptipCard) {
+                    this.poptipCard = this.$Poptip.card(
+                        event.target, //document.getElementById('confirm-button'),
+                        'I am title',
+                        'I am content',
+                        'top'
+                    );
+                }
+            },
+            hideCard() {
+                this.poptipCard && this.poptipCard.hide();
+                this.poptipCard = null;
+            },
             showConfirm(event) {
                 if (!this.poptipConfirm) {
                     this.poptipConfirm = this.$Poptip.confirm(
                         event.target, //document.getElementById('confirm-button'),
                         'Are you ok?',
+                        'top',
                         () => {
                             console.log('click ok');
                             this.poptipConfirm = null;
@@ -122,6 +138,7 @@
                     this.poptipConfirm2 = this.$Poptip.confirm(
                         event.target,
                         'Are you ok?',
+                        'top',
                         () => {
                             console.log('click ok');
                             this.poptipConfirm = null;
