@@ -3,10 +3,14 @@ import 'core-js/fn/array/find-index';
 
 import TooltipGlobal from './components/tooltip-global';
 import PoptipGlobal from './components/poptip-global';
+import InputPro from './components/input-pro';
+import ButtonWithDropdown from './components/button-with-dropdown';
 
 const iviewExt = {
     TooltipGlobal,
     PoptipGlobal,
+    InputPro,
+    ButtonWithDropdown,
 };
 
 const install = function (Vue, opts = {}) {

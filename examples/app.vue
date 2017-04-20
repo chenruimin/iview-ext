@@ -15,6 +15,8 @@ li + li { border-left: solid 1px #bbb; padding-left: 10px; margin-left: 10px; }
             <ul>
                 <li><router-link to="/tooltip-global">Tooltip Global</router-link></li>
                 <li><router-link to="/poptip-global">Poptip Global</router-link></li>
+                <li><router-link to="/input-pro">Input Pro</router-link></li>
+                <li><router-link to="/button-with-dropdown">Button With Dropdown</router-link></li>
             </ul>
         </nav>
         <router-view></router-view>

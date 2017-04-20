@@ -10,6 +10,8 @@ import iViewExt from '../src/index';
 import locale from 'iview/src/locale/lang/zh-CN';
 import TooltipGlobal from './routes/tooltip-global.vue';
 import PoptipGlobal from './routes/poptip-global.vue';
+import InputPro from './routes/input-pro.vue';
+import ButtonWithDropdown from './routes/button-with-dropdown.vue';
 
 Vue.use(VueRouter);
 Vue.use(iView, { locale });
@@ -28,7 +30,15 @@ const router = new VueRouter({
         {
             path: '/poptip-global',
             component: PoptipGlobal
-        }
+        },
+        {
+            path: '/input-pro',
+            component: InputPro
+        },
+        {
+            path: '/button-with-dropdown',
+            component: ButtonWithDropdown
+        },
     ]
 });
 
