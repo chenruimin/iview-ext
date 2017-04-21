@@ -2,43 +2,44 @@
     <div :class="wrapClasses">
         <template v-if="type !== 'textarea'">
             <div :class="[prefixCls + '-group-prepend']" v-if="prepend" v-show="slotReady"><slot name="prepend"></slot></div>
-            <i class="ivu-icon" :class="['ivu-icon-' + iconRender, prefixCls + '-icon', prefixCls + '-icon-normal']" v-if="iconRender&&currentValue.length" @click="handleIconClick"></i>
+            <i class="ivu-icon" :class="['ivu-icon-ios-close', prefixCls + '-icon', prefixCls + '-icon-normal']" :style="[prefixClsResetStyle]" v-if="reset && currentValue.length" @click="handleResetClick"></i>
+            <i class="ivu-icon" :class="['ivu-icon-' + icon, prefixCls + '-icon', prefixCls + '-icon-normal']" v-if="icon" @click="handleIconClick"></i>
             <transition name="fade">
-                <i class="ivu-icon ivu-icon-load-c ivu-load-loop" :class="[prefixCls + '-icon', prefixCls + '-icon-validate']" v-if="!iconRender"></i>
+                <i class="ivu-icon ivu-icon-load-c ivu-load-loop" :class="[prefixCls + '-icon', prefixCls + '-icon-validate']" v-if="!icon"></i>
             </transition>
             <input
-                :type="type"
-                :class="inputClasses"
-                :placeholder="placeholder"
-                :disabled="disabled"
-                :maxlength="maxlength"
-                :readonly="readonly"
-                :name="name"
-                :value="currentValue"
-                :number="number"
-                @keyup.enter="handleEnter"
-                @focus="handleFocus"
-                @blur="handleBlur"
-                @input="handleInput"
-                @change="handleChange">
+                    :type="type"
+                    :class="inputClasses"
+                    :placeholder="placeholder"
+                    :disabled="disabled"
+                    :maxlength="maxlength"
+                    :readonly="readonly"
+                    :name="name"
+                    :value="currentValue"
+                    :number="number"
+                    @keyup.enter="handleEnter"
+                    @focus="handleFocus"
+                    @blur="handleBlur"
+                    @input="handleInput"
+                    @change="handleChange">
             <div :class="[prefixCls + '-group-append']" v-if="append" v-show="slotReady"><slot name="append"></slot></div>
         </template>
         <textarea
-            v-else
-            ref="textarea"
-            :class="textareaClasses"
-            :style="textareaStyles"
-            :placeholder="placeholder"
-            :disabled="disabled"
-            :rows="rows"
-            :maxlength="maxlength"
-            :readonly="readonly"
-            :name="name"
-            :value="value"
-            @keyup.enter="handleEnter"
-            @focus="handleFocus"
-            @blur="handleBlur"
-            @input="handleInput">
+                v-else
+                ref="textarea"
+                :class="textareaClasses"
+                :style="textareaStyles"
+                :placeholder="placeholder"
+                :disabled="disabled"
+                :rows="rows"
+                :maxlength="maxlength"
+                :readonly="readonly"
+                :name="name"
+                :value="value"
+                @keyup.enter="handleEnter"
+                @focus="handleFocus"
+                @blur="handleBlur"
+                @input="handleInput">
         </textarea>
     </div>
 </template>
@@ -105,7 +106,6 @@
             }
         },
         data () {
-            console.log('this.reset', this.reset);
             return {
                 currentValue: this.value,
                 prefixCls: prefixCls,
@@ -113,7 +113,9 @@
                 append: true,
                 slotReady: false,
                 textareaStyles: {},
-                iconRender: this.reset ? 'ios-close': this.icon,
+                prefixClsResetStyle: {
+                    right: this.icon ? '32px' : '0'
+                }
             };
         },
         computed: {
@@ -154,12 +156,12 @@
                 this.$emit('on-enter', event);
             },
             handleIconClick (event) {
-                if (this.reset) {
-                    this.currentValue = '';
-                    return;
-                }
-
                 this.$emit('on-click', event);
+            },
+            handleResetClick (event) {
+                this.currentValue = '';
+                this.$emit('input', '');
+                this.$emit('on-reset', event);
             },
             handleFocus (event) {
                 this.$emit('on-focus', event);

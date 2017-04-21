@@ -1,9 +1,9 @@
 <template>
     <div>
         <Button-group>
-            <Button :type="type" @click="handleIconClick">{{ title }}</Button>
-            <Dropdown :trigger="trigger" @on-click="handleItemClick">
-                <Button :type="type" style="border-bottom-left-radius: 0; border-top-left-radius: 0;">
+            <Button :size="size" :type="type" @click="handleIconClick">{{ title }}</Button>
+            <Dropdown :trigger="trigger" :placement="placement" @on-click="handleItemClick">
+                <Button :size="size" :type="type" style="border-bottom-left-radius: 0; border-top-left-radius: 0;">
                     <Icon type="arrow-down-b"></Icon>
                 </Button>
                 <div slot="list"><slot name="list"></slot></div>
@@ -22,14 +22,24 @@
                 validator (value) {
                     return oneOf(value, ['primary', 'ghost', 'dashed', 'text', 'info', 'success', 'warning', 'error']);
                 },
-                default: 'default'
             },
             trigger: {
                 validator (value) {
                     return oneOf(value, ['click', 'hover']);
                 },
                 default: 'click'
-            }
+            },
+            size: {
+                validator (value) {
+                    return oneOf(value, ['small', 'large']);
+                }
+            },
+            placement: {
+                validator (value) {
+                    return oneOf(value, ['top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left', 'left-start', 'left-end', 'right', 'right-start', 'right-end']);
+                },
+                default: 'bottom'
+            },
         },
         methods: {
             handleIconClick (event) {

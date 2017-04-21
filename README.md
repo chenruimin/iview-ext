@@ -50,15 +50,17 @@ poptip.hide();
 * 注：暂时只是在Input的功能上增加了reset按钮的功能，起InputPro这个名字只是为了后续基于Input的扩展继续使用这个组件。
 
 ```html
-<input-pro v-model="value" reset></input-pro>
+<input-pro reset v-model="value" @on-reset="handleReset"></input-pro>
 ```
 
-加上reset的标记即可开启一键清除input中内容的功能，其他的使用方式和input相同，除了下面这点例外：reset的x按钮占用的是icon位置，因此，设置了reset后icon会被覆盖。
+1. @on-reset 是点击了reset的事件回调。**注意** 目前已经适配了双向绑定，无需在此回调修改父组件model的值。
 
 ### ButtonWithDropdown
 
 ```html
-<Button-with-dropdown title="请点击" trigger="hover" type="primary" @click="handleButtonClick" @select="handleItemSelect">
+<Button-with-dropdown title="请点击" trigger="hover" type="primary" size="small" placement="right"
+                      @click="handleButtonClick" @select="handleItemSelect"
+>
     <Dropdown-menu slot="list">
         <Dropdown-item name="position-0">驴打滚</Dropdown-item>
         <Dropdown-item name="position-1">炸酱面</Dropdown-item>
@@ -69,10 +71,13 @@ poptip.hide();
 </Button-with-dropdown>
 ```
 
-1. type 的取值可参考Button的type，默认为 default
-2. trigger 可为 hover 或者 click，默认为 click （区别于Dropdown组件默认是hover，考虑到当前场景下 click 的概率更大）
-3. title 是左边按钮的显示内容，@click 是左边按钮被点击的事件，@select 是下拉中任意一个item被点击的事件
-4. Dropdown-menu 和 Dropdown-item 参考iview的相关组件，未做改变。只需在Dropdown-menu上加 slot="list"，这是**必需**的
+1. type 的取值可参考Button的type，可选。
+2. trigger 可为 hover 或者 click，默认为 click （区别于Dropdown组件默认是hover，考虑到当前场景下 click 的概率更大）。
+3. size 可取值 small(小尺寸) 或者 large(大尺寸)，可选。默认情况是中等尺寸。
+4. placement 可参考Dropdown组件，支持12个值，可选。默认情况是bottom。
+5. title 是左边按钮的显示内容。
+6. @click 是左边按钮被点击的事件回调，@select 是下拉中任意一个item被点击的事件回调。
+7. Dropdown-menu 和 Dropdown-item 参考iview的相关组件，未做改变。只需在Dropdown-menu上加 slot="list"，这是**必需**的。
 
 ## 改动
 
